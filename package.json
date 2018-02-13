@@ -1,0 +1,25 @@
+{
+  "name": "react-lazyload-image",
+  "version": "1.0.0",
+  "description": "Lazy load image component for react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustFly1984/react-lazyload-image.git"
+  },
+  "keywords": [
+    "React",
+    "lazyload",
+    "image",
+    "component"
+  ],
+  "author": "justfly1984@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JustFly1984/react-lazyload-image/issues"
+  },
+  "homepage": "https://github.com/JustFly1984/react-lazyload-image#readme"
+}
