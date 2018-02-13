@@ -1,7 +1,7 @@
 # react-lazyloading-images
 Lazy loading image component for React
 
-The main goal of this component is providing reliable, performance optimized, cross-browser, responsive and SEO friendly lazyloading for images. It supports both - WebP and PNG image formats. It means you need to provide both formats images accessible from your public directory at the same time. Also this component allows you to implement `low quality image placeholder` technic, which Medium.com uses.
+The main goal of this component is providing reliable, performance optimized, cross-browser, responsive and SEO friendly lazyloading images. It supports both - WebP and PNG image formats. It means you need to provide both image formats, accessible from your public directory. This component allows you to implement `low quality image placeholder` technic, which Medium.com uses.
 
 WebP is widely supported by Chrome and Android browsers according to (https://caniuse.com/#feat=webp)[https://caniuse.com/#feat=webp] and it is much lighter format than PNG. Firefox and Safari are working on their implementation.
 
