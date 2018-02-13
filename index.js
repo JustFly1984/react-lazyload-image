@@ -1,6 +1,5 @@
 export {
-  isWebPSupported,
-  initLazyLoadImages
+  isWebPSupported
 } from './src/lazyload'
 
 export LazyImage from './src/component'
