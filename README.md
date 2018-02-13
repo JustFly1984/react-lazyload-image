@@ -1,7 +1,7 @@
 # react-lazyloading-images
 Lazy loading image component for React
 
-The main goal of this component is providing reliable, performance optimized, cross-browser, responsive and SEO friendly lazyloading images. It supports both - WebP and PNG image formats. It means you need to provide both image formats, accessible from your public directory. This component allows you to implement `low quality image placeholder` technic, which Medium.com uses.
+The main goal of this component is providing reliable, performance optimized, cross-browser, responsive and SEO friendly lazyloading images. It supports both - WebP and PNG image formats. It means you need to provide both image formats, accessible from your public directory. This component allows you to implement blurry `low quality image placeholder` technic, which Medium.com uses.
 
 WebP is widely supported by Chrome and Android browsers according to (https://caniuse.com/#feat=webp)[https://caniuse.com/#feat=webp] and it is much lighter format than PNG. Firefox and Safari are working on their implementation.
 
@@ -29,25 +29,25 @@ const config = {
 		width: 50, // px value. type: number
 		height: 50, // px value. type: number
     src: '/img/logo-50', // file name without extension. type: string
-    placeholder: '/img/logo-50-placeholder' // file name without extension. type: string
+    placeholder: '/img/logo-50-placeholder.png' // type: string
 	},
 	portrait: { // screen width 768px > 1024px
 		width: 75, // px value. type: number
 		height: 75, // px value. type: number
     src: '/img/logo-75', // file name without extension. type: string
-    placeholder: '/img/logo-75-placeholder' // file name without extension. type: string
+    placeholder: '/img/logo-75-placeholder.png' // type: string
 	},
 	landscape: { // screen width 1024px > 1280px
 		width: 100, // px value. type: number
 		height: 100, // px value. type: number
     src: '/img/logo-100', // file name without extension. type: string
-    placeholder: '/img/logo-100-placeholder' // file name without extension. type: string
+    placeholder: '/img/logo-100-placeholder.png' // type: string
 	},
 	desktop: {  // screen width > 1280px
 		width: 150, // px value. type: number
 		height: 150, // px value. type: number
     src: '/img/logo-150', // file name without extension. type: string
-    placeholder: '/img/logo-150-placeholder' // file name without extension. type: string
+    placeholder: '/img/logo-150-placeholder.png' // type: string
 	}
 }
 
@@ -55,10 +55,11 @@ const MyComponent = () => (
   <div>
 		<LazyImage
 			className='lazyImage' // type: string, optional, default value === ''
+      title='logo' // type: string, optional, default value === ''
 			alt='logo' // type: string, required.
+      onLoad={this.onLoad} // type: function, optional, default value === e => {}
 			config={config} // required.
-			rootMargin='500px 0px' // type: string, optional, default value === '300px 0px'.
-			fallbackMargin={500} // type: number, optional, default value === 300
+			rootMargin='500px 0px' // type: string, optional, default value === '300px 0px'
 		/>
 	</div>
 )
@@ -68,34 +69,14 @@ export default MyComponent
 
 ## Important information:
 
-Under the hood Lazy loading made with `IntersectionObserver` API, and fallback to standard scroll events only for legacy browsers.
+Under the hood Lazy loading made with `IntersectionObserver` API and uses npm `intersection-observer` polyfill as fallback.
 
-If your images located in the view immediately, IntersectionObserver automatically replaces placeholder with src, but legacy browsers does not, so for this case we need to initiate lazyloading for those images.
-
-
-Please follow the example above to initiate lazyloading support for legacy browsers. In your main file where you render React app you need to import initLazyLoadImages function and execute it after ReactDOM.render() you app.
-
-```
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { initLazyLoadImages } from 'react-lazyloading-images'
-
-import App from './app'
-
-ReactDOM.render(
-  <App />
-  , document.getElementById('root')
-)
-
-initLazyLoadImages()
-
-```
 
 ## Additional information:
 
 You can use Gulp and gulp plugins to generate highly optimized PNG and WEBP assets.
 
-I highly recommend you to use code below in separate directory from your main project, and copy results to your public directory, or if you want to use it in your own projrct, modify src and dist
+I highly recommend you to use code below in separate directory from your main project, and copy results to your public directory, or if you want to use it in your own project, modify src and dist
 
 First thing you need to do is install gulp and several plugins:
 

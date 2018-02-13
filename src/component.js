@@ -11,7 +11,9 @@ import {
 class LazyImage extends Component {
   static propTypes = {
     className: PropTypes.string,
+    title: PropTypes.string,
     alt: PropTypes.string.isRequired,
+    onLoad: PropTypes.func,
     config: PropTypes.shape({
       mobile: PropTypes.shape({
         width: PropTypes.number.isRequired,
@@ -38,14 +40,14 @@ class LazyImage extends Component {
         placeholder: PropTypes.string.isRequired
       }).isRequired
     }).isRequired,
-    rootMargin: PropTypes.string,
-    fallbackMargin: PropTypes.number
+    rootMargin: PropTypes.string
   }
 
   static defaultProps = {
     className: '',
+    title: '',
     rootMargin: '300px 0px',
-    fallbackMargin: 300
+    onLoad: () => {}
   }
 
   state = {
@@ -63,7 +65,7 @@ class LazyImage extends Component {
 
   componentDidMount = () => {
     if (typeof document !== 'undefined') {
-      addToLazyload(this.img, this.props.rootMargin, this.props.fallbackMargin)
+      addToLazyload(this.img, this.props.rootMargin)
 
       this.setSizes()
 
@@ -73,7 +75,7 @@ class LazyImage extends Component {
 
   componentDidUpdate = prevProps => {
     if (prevProps.config.mobile.src !== this.props.config.mobile.src) {
-      addToLazyload(this.img, this.props.rootMargin, this.props.fallbackMargin)
+      addToLazyload(this.img, this.props.rootMargin)
     }
   }
 
@@ -102,28 +104,28 @@ class LazyImage extends Component {
       width = this.props.config.mobile.width
       height = this.props.config.mobile.height
       src = this.props.config.mobile.src
-      placeholder = this.props.config.mobile.placeholder + '.png'
+      placeholder = this.props.config.mobile.placeholder
     } else if (
       this.resolution >= 768 && this.resolution < 1024
     ) {
       width = this.props.config.portrait.width
       height = this.props.config.portrait.height
       src = this.props.config.portrait.src
-      placeholder = this.props.config.portrait.placeholder + '.png'
+      placeholder = this.props.config.portrait.placeholder
     } else if (
       this.resolution >= 1024 && this.resolution < 1280
     ) {
       width = this.props.config.landscape.width
       height = this.props.config.landscape.height
       src = this.props.config.landscape.src
-      placeholder = this.props.config.landscape.placeholder + '.png'
+      placeholder = this.props.config.landscape.placeholder
     } else if (
       this.resolution >= 1280
     ) {
       width = this.props.config.desktop.width
       height = this.props.config.desktop.height
       src = this.props.config.desktop.src
-      placeholder = this.props.config.desktop.placeholder + '.png'
+      placeholder = this.props.config.desktop.placeholder
     }
 
     this.setState(
@@ -142,9 +144,11 @@ class LazyImage extends Component {
 
   render = () => (
     <img
+      onLoad={this.props.onLoad}
       width={this.state.width}
       height={this.state.height}
       className={this.props.className}
+      title={this.props.title}
       src={this.state.placeholder}
       data-lazy
       data-src={this.state.src}

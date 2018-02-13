@@ -1,6 +1,6 @@
 {
   "name": "react-lazyloading-images",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Lazy load image component for react",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,14 @@
     "image",
     "component"
   ],
+  "dependencies": {
+    "intersection-observer": "^0.5.0",
+    "prop-types": "^15.6.0"
+  },
+  "peerDependencies": {
+    "react": "^16 || ^15.6.0",
+    "react-dom": "^16 || ^15.6.0"
+  },
   "author": "Alexey Lyakhov <justfly1984@gmail.com>",
   "license": "MIT",
   "bugs": {
