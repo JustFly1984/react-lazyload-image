@@ -2,4 +2,6 @@ export {
   isWebPSupported
 } from './src/lazyload'
 
-export LazyImage from './src/component'
+export {
+  default as LazyImage
+} from './src/component'
