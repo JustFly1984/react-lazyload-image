@@ -2,7 +2,7 @@ import {
   React,
   Component,
   PropTypes
-} from '../../vendor.js'
+} from './vendor.js'
 
 import {
   addToLazyload
@@ -50,29 +50,31 @@ class LazyImage extends Component {
 
   state = {
     width: 56,
-    height: 56
+    height: 56,
+    src: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg==',
+    placeholder: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg=='
   }
 
   componentWillMount = () => {
     if (typeof document !== 'undefined') {
-      this.resolution = window.screen.width
       this.setSizes()
     }
   }
 
   componentDidMount = () => {
-    addToLazyload(this.img, this.props.rootMargin, this.props.fallbackMargin)
+    if (typeof document !== 'undefined') {
+      addToLazyload(this.img, this.props.rootMargin, this.props.fallbackMargin)
 
-    this.resolution = window.screen.width
+      this.setSizes()
 
-    this.setSizes()
-
-    window.addEventListener('resize', this.onResize)
+      window.addEventListener('resize', this.onResize)
+    }
   }
 
   componentDidUpdate = prevProps => {
-    prevProps.config.mobile.src !== this.props.config.mobile.src &&
-    addToLazyload(this.img, this.props.rootMargin, this.props.fallbackMargin)
+    if (prevProps.config.mobile.src !== this.props.config.mobile.src) {
+      addToLazyload(this.img, this.props.rootMargin, this.props.fallbackMargin)
+    }
   }
 
   componentWillUnmount = () => {
@@ -83,12 +85,13 @@ class LazyImage extends Component {
 
   onResize = () => {
     if (typeof document !== 'undefined') {
-      this.resolution = window.screen.width
       this.setSizes()
     }
   }
 
   setSizes = () => {
+    this.resolution = window.screen.width
+
     let width
     let height
     let src
@@ -99,34 +102,36 @@ class LazyImage extends Component {
       width = this.props.config.mobile.width
       height = this.props.config.mobile.height
       src = this.props.config.mobile.src
-      placeholder = this.props.config.mobile.placeholder
+      placeholder = this.props.config.mobile.placeholder + '.png'
     } else if (
       this.resolution >= 768 && this.resolution < 1024
     ) {
       width = this.props.config.portrait.width
       height = this.props.config.portrait.height
       src = this.props.config.portrait.src
-      placeholder = this.props.config.portrait.placeholder
+      placeholder = this.props.config.portrait.placeholder + '.png'
     } else if (
       this.resolution >= 1024 && this.resolution < 1280
     ) {
       width = this.props.config.landscape.width
       height = this.props.config.landscape.height
       src = this.props.config.landscape.src
-      placeholder = this.props.config.landscape.placeholder
+      placeholder = this.props.config.landscape.placeholder + '.png'
     } else if (
       this.resolution >= 1280
     ) {
       width = this.props.config.desktop.width
       height = this.props.config.desktop.height
       src = this.props.config.desktop.src
-      placeholder = this.props.config.desktop.placeholder
+      placeholder = this.props.config.desktop.placeholder + '.png'
     }
 
     this.setState(
       () => ({
         width,
-        height
+        height,
+        src,
+        placeholder
       })
     )
   }
@@ -140,9 +145,9 @@ class LazyImage extends Component {
       width={this.state.width}
       height={this.state.height}
       className={this.props.className}
-      src={this.props.placeholder}
+      src={this.state.placeholder}
       data-lazy
-      data-src={this.props.src}
+      data-src={this.state.src}
       alt={this.props.alt}
       ref={this.getRef}
     />

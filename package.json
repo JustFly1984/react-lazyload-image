@@ -16,7 +16,7 @@
     "image",
     "component"
   ],
-  "author": "justfly1984@gmail.com",
+  "author": "Alexey Lyakhov <justfly1984@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/JustFly1984/react-lazyload-image/issues"

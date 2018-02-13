@@ -33,12 +33,12 @@ export const addToLazyload = (elem, rootMargin, fallbackMargin) => {
   if (lazyloadObserver !== null) {
     lazyloadObserver.observe(elem)
   } else {
-    lazyloadIter(elem)
+    lazyloadIter(elem, fallbackMargin)
   }
 }
 
 // Legacy browsers support
-const lazyloadIter = elem =>
+const lazyloadIter = (elem, fallbackMargin = 300) =>
   (elem.getBoundingClientRect().top - window.innerHeight <= fallbackMargin) &&
   setImageSrc(elem)
 

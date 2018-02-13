@@ -26,28 +26,28 @@ import LazyImage from 'react-lazyloading-images'
 
 const config = {
 	mobile: { // screen width < 768px
-		width: '50px',
-		height: '50px',
-    src: '/img/logo-50',
-    placeholder: '/img/logo-50-placeholder'
+		width: 50, // px value. type: number
+		height: 50, // px value. type: number
+    src: '/img/logo-50', // file name without extension. type: string
+    placeholder: '/img/logo-50-placeholder' // file name without extension. type: string
 	},
 	portrait: { // screen width 768px > 1024px
-		width: '75px',
-		height: '75px',
-    src: '/img/logo-75',
-    placeholder: '/img/logo-75-placeholder'
+		width: 75, // px value. type: number
+		height: 75, // px value. type: number
+    src: '/img/logo-75', // file name without extension. type: string
+    placeholder: '/img/logo-75-placeholder' // file name without extension. type: string
 	},
 	landscape: { // screen width 1024px > 1280px
-		width: '100px',
-		height: '100px',
-    src: '/img/logo-100',
-    placeholder: '/img/logo-100-placeholder'
+		width: 100, // px value. type: number
+		height: 100, // px value. type: number
+    src: '/img/logo-100', // file name without extension. type: string
+    placeholder: '/img/logo-100-placeholder' // file name without extension. type: string
 	},
 	desktop: {  // screen width > 1280px
-		width: '150px',
-		height: '150px',
-    src: '/img/logo-150',
-    placeholder: '/img/logo-150-placeholder'
+		width: 150, // px value. type: number
+		height: 150, // px value. type: number
+    src: '/img/logo-150', // file name without extension. type: string
+    placeholder: '/img/logo-150-placeholder' // file name without extension. type: string
 	}
 }
 
@@ -56,7 +56,7 @@ const MyComponent = () => (
 		<LazyImage
 			className='lazyImage' // type: string, optional, default value === ''
 			alt='logo' // type: string, required.
-			config={config} // type: object. dimensions according to most common responsive breakpoints. required.
+			config={config} // required.
 			rootMargin='500px 0px' // type: string, optional, default value === '300px 0px'.
 			fallbackMargin={500} // type: number, optional, default value === 300
 		/>
