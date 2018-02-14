@@ -12,6 +12,8 @@ export {
   isWebPSupported
 } from './lazyload'
 
+const placeholder = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg=='
+
 class LazyImage extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -51,7 +53,7 @@ class LazyImage extends Component {
   state = {
     width: 48,
     height: 48,
-    path: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg=='
+    path: ''
   }
 
   componentDidMount = () => {
@@ -143,7 +145,7 @@ class LazyImage extends Component {
       src={`${this.state.path}-${this.state.width}-placeholder.png`}
       style={this.props.style}
       data-lazy
-      data-src={`${this.state.path}-${this.state.width}`}
+      data-src={this.state.path !== '' ? `${this.state.path}-${this.state.width}` : placeholder}
       alt={this.props.alt}
       ref={this.getRef}
       {...this.props}
