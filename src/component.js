@@ -57,12 +57,6 @@ class LazyImage extends Component {
     placeholder: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg=='
   }
 
-  componentWillMount = () => {
-    if (typeof document !== 'undefined') {
-      this.setSizes()
-    }
-  }
-
   componentDidMount = () => {
     if (typeof document !== 'undefined') {
       addToLazyload(this.img, this.props.rootMargin)
