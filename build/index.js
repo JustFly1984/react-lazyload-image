@@ -495,20 +495,34 @@ module.exports = warning;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_lazyload__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_lazyload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__src_lazyload__);
-/* harmony reexport (binding) */ if(__webpack_require__.o(__WEBPACK_IMPORTED_MODULE_0__src_lazyload__, "isWebPSupported")) __webpack_require__.d(__webpack_exports__, "isWebPSupported", function() { return __WEBPACK_IMPORTED_MODULE_0__src_lazyload__["isWebPSupported"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_component__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_component__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "LazyImage", function() { return __WEBPACK_IMPORTED_MODULE_1__src_component___default.a; });
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _lazyload = __webpack_require__(4);
 
+Object.defineProperty(exports, 'isWebPSupported', {
+  enumerable: true,
+  get: function get() {
+    return _lazyload.isWebPSupported;
+  }
+});
+
+var _component = __webpack_require__(8);
+
+Object.defineProperty(exports, 'LazyImage', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_component).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
 /* 7 */
