@@ -1294,10 +1294,6 @@ var LazyImage = function (_Component) {
       height: 56,
       src: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg==',
       placeholder: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg=='
-    }, _this.componentWillMount = function () {
-      if (typeof document !== 'undefined') {
-        _this.setSizes();
-      }
     }, _this.componentDidMount = function () {
       if (typeof document !== 'undefined') {
         (0, _lazyload.addToLazyload)(_this.img, _this.props.rootMargin);
