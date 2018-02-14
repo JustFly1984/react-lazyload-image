@@ -11,8 +11,6 @@ export const isWebPSupported = canvas.getContext && canvas.getContext('2d')
 const setImageSrc = elem => {
   if (elem.getAttribute('data-src')) {
     elem.src = `${elem.getAttribute('data-src')}${isWebPSupported ? '.webp' : '.png'}`
-
-    elem.removeAttribute('data-src')
   }
 }
 
@@ -31,7 +29,7 @@ export const addToLazyload = (elem, rootMargin) => {
     if (!('IntersectionObserver' in window)) {
       require('intersection-observer')
     }
-    
+
     const lazyloadObserver = new IntersectionObserver(onIntersection, { rootMargin })
 
     lazyloadObserver.observe(elem)
