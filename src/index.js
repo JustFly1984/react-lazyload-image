@@ -142,10 +142,10 @@ class LazyImage extends Component {
       height={this.state.height}
       className={this.props.className}
       title={this.props.title}
-      src={`${this.state.path}-${this.state.width}-placeholder.png`}
+      src={this.state.path === '' ? placeholder : `${this.state.path}-${this.state.width}-placeholder.png`}
       style={this.props.style}
       data-lazy
-      data-src={this.state.path === '' ? placeholder : `${this.state.path}-${this.state.width}`}
+      data-src={`${this.state.path}-${this.state.width}`}
       alt={this.props.alt}
       ref={this.getRef}
       {...this.props}
