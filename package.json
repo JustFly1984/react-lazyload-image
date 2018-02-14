@@ -1,8 +1,8 @@
 {
   "name": "react-lazyloading-images",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Lazy load image component for react",
-  "main": "./build/index.js",
+  "main": "lib",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --watch",
