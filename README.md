@@ -27,7 +27,7 @@ import LazyImage from 'react-lazyloading-images'
 const MyComponent = () => (
   <div>
 		<LazyImage
-      src='/img/logo' // type: string, required
+      path='/img/logo' // type: string, required
 			className='lazyImage' // type: string, optional, default value === ''
       title='logo' // type: string, optional, default value === ''
 			alt='logo' // type: string, required.
@@ -68,7 +68,7 @@ Under the hood Lazy loading made with `IntersectionObserver` API and uses npm `i
 
 You can use Gulp and gulp plugins to generate highly optimized PNG and WEBP assets.
 
-I highly recommend you to use code below in separate directory from your main project, and copy results to your public directory, or if you want to use it in your own project, modify src and dist
+I highly recommend you to use code below in separate directory from your main project, and copy results to your public directory, or if you want to use it in your own project, modify src and dist.
 
 First thing you need to do is install gulp and several plugins:
 
@@ -142,14 +142,14 @@ gulp
 ```
 For each source image you will get 3 asset images. For example if you provide `logo-50.png` in `/src/`, you will get production optimized `logo-50.png`, `logo-50.webp` and `logo-50-placeholder.png`. You need to provide 4 sets of images, for each breakpoint: mobile, portrait, landscape and desktop. So in total it should be 3 x 4 = 12 images per LazyImage instance.
 
-You need to copy all 3 files to your `./public/` directory, and specify relative path to `src` prop for `<LazyImage />` without suffix and extension.
+You need to copy all 3 files to your `./public/` directory, and specify relative `path` prop for `<LazyImage />` without suffix and extension.
 Suffix will be generated for free.
 
-If your images path is `/public/images/logo-50.png`, you need to set src prop as in example below:
+If your images path is `/public/images/logo-50.png`, you need to set `path` prop as in example below:
 
 ```
 <LazyImage
-  src={'/images/logo'}
+  path={'/images/logo'}
   alt='logo'
   config={{
     mobile: { // screen width < 768px breakpoint

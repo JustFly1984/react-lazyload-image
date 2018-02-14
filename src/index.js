@@ -18,7 +18,7 @@ class LazyImage extends Component {
     title: PropTypes.string,
     alt: PropTypes.string.isRequired,
     onLoad: PropTypes.func,
-    src: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
     config: PropTypes.shape({
       mobile: PropTypes.shape({
         width: PropTypes.number.isRequired,
@@ -67,7 +67,7 @@ class LazyImage extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    if (prevProps.src !== this.props.src) {
+    if (prevProps.path !== this.props.path) {
       this.setSizes()
 
       addToLazyload(this.img, this.props.rootMargin)
@@ -93,38 +93,38 @@ class LazyImage extends Component {
   setSizes = () => {
     let width
     let height
-    let src
+    let path
     if (
       this.resolution > 0 && this.resolution < 768
     ) {
       width = this.props.config.mobile.width
       height = this.props.config.mobile.height
-      src = this.props.src
+      path = this.props.path
     } else if (
       this.resolution >= 768 && this.resolution < 1024
     ) {
       width = this.props.config.portrait.width
       height = this.props.config.portrait.height
-      src = this.props.src
+      path = this.props.path
     } else if (
       this.resolution >= 1024 && this.resolution < 1280
     ) {
       width = this.props.config.landscape.width
       height = this.props.config.landscape.height
-      src = this.props.src
+      path = this.props.path
     } else if (
       this.resolution >= 1280
     ) {
       width = this.props.config.desktop.width
       height = this.props.config.desktop.height
-      src = this.props.src
+      path = this.props.path
     }
 
     this.setState(
       () => ({
         width,
         height,
-        src
+        path
       })
     )
   }
@@ -140,10 +140,10 @@ class LazyImage extends Component {
       height={this.state.height}
       className={this.props.className}
       title={this.props.title}
-      src={`${this.state.src}-${this.state.width}-placeholder.png`}
+      src={`${this.state.path}-${this.state.width}-placeholder.png`}
       style={this.props.style}
       data-lazy
-      data-src={`${this.state.src}-${this.state.width}`}
+      data-src={`${this.state.path}-${this.state.width}`}
       alt={this.props.alt}
       ref={this.getRef}
       {...this.props}
