@@ -1,6 +1,6 @@
 {
   "name": "react-lazyloading-images",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Lazy load image component for react",
   "main": "lib",
   "scripts": {
