@@ -8,9 +8,20 @@ export const isWebPSupported = canvas.getContext && canvas.getContext('2d')
   ? canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
   : false
 
+const replaceExtensionToWebP = fullpath =>
+  fullpath.substr(0, fullpath.lastIndexOf('.')) + '.webp'
+
 const setImageSrc = elem => {
   if (elem.getAttribute('data-src')) {
-    elem.src = `${elem.getAttribute('data-src')}${isWebPSupported ? '.webp' : '.png'}`
+    const image = new Image()
+
+    image.onload = () => {
+      elem.src = image.src
+      elem.width = image.naturalWidth
+      elem.height = image.naturalHeight
+    }
+
+    image.src = isWebPSupported ? replaceExtensionToWebP(elem.getAttribute('data-src')) : elem.getAttribute('data-src')
   }
 }
 

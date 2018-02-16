@@ -1,13 +1,12 @@
 # react-lazyloading-images
 Lazy loading image component for React
 
-The main goal of this component is providing reliable, performance optimized, cross-browser, responsive and SEO friendly lazyloading images. It supports both - WebP and PNG image formats. It means you need to provide both image formats, accessible from your public directory. This component allows you to implement blurry `low quality image placeholder` technic, which Medium.com uses.
+The main goal of this component is providing reliable, performance optimized, cross-browser, responsive and SEO friendly lazyloading images.
+It supports WebP image format for Google Chrome and Android and JPEG or PNG for other browsers. It means you need to provide both image formats, accessible from your public directory. This component allows you to implement blurry `low quality image placeholder` technic, which Medium.com uses.
 
-WebP is widely supported by Chrome and Android browsers according to [https://caniuse.com/#feat=webp](https://caniuse.com/#feat=webp) and it is much lighter format than PNG. Firefox and Safari are working on their implementation.
+WebP is widely supported by Chrome and Android browsers according to [https://caniuse.com/#feat=webp](https://caniuse.com/#feat=webp) and it is much lighter format than any other image standard. Firefox and Safari are working on their implementation.
 
-PNG is supported by all other browser vendors, and is known for smaller sizes and transparency, so it used as fallback.
-
-Important! No other extensions like JPEG or GIF is supported, so please convert your images only to PNG and WEBP.
+You can provide breakpoints array with objects, to serve smaller images for mobile users and bigger images for desktop users. You can orchestrate unique user experience by providing variable images, depending on user device.
 
 ## 1. Install
 
@@ -19,49 +18,64 @@ or
 yarn add react-lazyloading-images
 ```
 
-## 2. Example
+## 2. Examples
+
+You can use `LazyImage` component in two ways, Basic and Advanced
 
 ```
 import LazyImage from 'react-lazyloading-images'
 
-const MyComponent = () => (
-  <div>
-		<LazyImage
-      path='/img/logo' // type: string, required
-			className='lazyImage' // type: string, optional, default value === ''
-      title='logo' // type: string, optional, default value === ''
-			alt='logo' // type: string, required.
-      onLoad={this.onLoad} // type: function, optional, default value === e => {}
-			config={{
-      	mobile: { // screen width < 768px breakpoint
-      		width: 50, // px value. type: number
-      		height: 50 // px value. type: number
-      	},
-      	portrait: { // screen width 768px > 1024px breakpoint
-      		width: 75, // px value. type: number
-      		height: 75 // px value. type: number
-      	},
-      	landscape: { // screen width 1024px > 1280px breakpoint
-      		width: 100, // px value. type: number
-      		height: 100 // px value. type: number
-      	},
-      	desktop: {  // screen width > 1280px breakpoint
-      		width: 150, // px value. type: number
-      		height: 150 // px value. type: number
-      	}
-      }} // required.
-      style={{ width: '100%', height: 'auto' }} // type: object, optional.
-			rootMargin='500px 0px' // type: string, optional, default value === '300px 0px'
-		/>
-	</div>
+const BasicLazyImage = () => (
+	<LazyImage
+    path='/images/logo.{png|jpe?g}' // type: String, if breakpoints array provided - optional
+    blur='/images/logo-blur.{png|jpe?g}' // type: String, if breakpoints array provided - optional,
+    width=100 // type: number, if breakpoints array provided - optional. default value 48,
+    height=100 // type: number, if breakpoints array provided - optional. default value 48,
+		className='lazyImage' // type: String, optional, default value === ''
+    title='logo' // type: String, optional, default value === ''
+		alt='logo' // type: String, required.
+	/>
 )
 
-export default MyComponent
+const AdvancedLazyImage = () => (
+	<LazyImage
+		className='lazyImage' // type: String, optional, default value === ''
+    title='logo' // type: String, optional, default value === ''
+		alt='logo' // type: String, required.
+		breakpoints={[
+      {
+        media: '(max-width: 767px)', // type: String
+        path: '/img/logo-mobile.jpeg', // type: String
+        blur: '/img/logo-mobile-blur.jpeg', // type: String
+        width: 50, // type: Number,
+        height: 50 // type: Number
+      },
+      {
+        media: '(min-width: 768px) and (max-width: 1279px)',  // type: String
+        path: '/img/logo-tablet.jpeg',  // type: String
+        blur: '/img/logo-tablet-blur.jpeg',  // type: String
+        width: 75, // type: Number,
+        height: 75 // type: Number
+      },
+      {
+        media: '(min-width: 1280px)',
+        path: '/img/logo-desktop.jpeg',
+        blur: '/img/logo-desktop-blur.jpeg',
+        width: 100, // type: Number,
+        height: 100 // type: Number
+      }
+    ]} // optional.
+    style={{ width: '100%', height: 'auto' }} // type: object, optional
+		rootMargin='500px 0px' // type: String, optional, default value === '300px 0px'
+	/>
+)
 ```
 
 ## 3. Important information:
 
 Under the hood Lazy loading made with `IntersectionObserver` API and uses npm `intersection-observer` polyfill as fallback.
+
+media prop should be compatible with Window.matchMedia API [https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
 
 
 ## 4. Additional information:
@@ -103,7 +117,7 @@ const webp = require('gulp-webp')
 
 const config = {
   placeholderSize: 48,
-  src: 'src/*.png',
+  src: 'src/*.{png|jpe?g}',
   dest: 'dest/',
   outputFormat: 'png',
   webp: false,
@@ -140,35 +154,21 @@ Paste your png files to src directory and run:
 ```
 gulp
 ```
-For each source image you will get 3 asset images. For example if you provide `logo-50.png` in `/src/`, you will get production optimized `logo-50.png`, `logo-50.webp` and `logo-50-placeholder.png`. You need to provide 4 sets of images, for each breakpoint: mobile, portrait, landscape and desktop. So in total it should be 3 x 4 = 12 images per LazyImage instance.
+
+For each source image you will get 3 asset images. For example if you provide `logo.png` in `/src/`, you will get production optimized `logo.png`, `logo.webp` and `logo-placeholder.png`.
 
 You need to copy all 3 files to your `./public/` directory, and specify relative `path` prop for `<LazyImage />` without suffix and extension.
 Suffix will be generated for free.
 
-If your images path is `/public/images/logo-50.png`, you need to set `path` prop as in example below:
+If your images path is `/public/images/logo.png`, you need to set `path` prop as in example below:
 
 ```
 <LazyImage
-  path={'/images/logo'}
+  path='/images/logo.jpg'
+  blur='/images/logo-blur.jpg'
+  width=100
+  height=100
   alt='logo'
-  config={{
-    mobile: { // screen width < 768px breakpoint
-      width: 50, // px value. type: number
-      height: 50 // px value. type: number
-    },
-    portrait: { // screen width 768px > 1024px breakpoint
-      width: 75, // px value. type: number
-      height: 75 // px value. type: number
-    },
-    landscape: { // screen width 1024px > 1280px breakpoint
-      width: 100, // px value. type: number
-      height: 100 // px value. type: number
-    },
-    desktop: {  // screen width > 1280px breakpoint
-      width: 150, // px value. type: number
-      height: 150 // px value. type: number
-    }
-  }}
 />
 ```
 
