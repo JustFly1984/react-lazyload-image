@@ -5,7 +5,8 @@ import React, {
 import PropTypes from 'prop-types'
 
 import {
-  addToLazyload
+  addToLazyload,
+  isBrowser
 } from './lazyload'
 
 export {
@@ -14,27 +15,28 @@ export {
 
 const placeholder = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+Cg=='
 
+const LazyImagePropTypes = {
+  className: PropTypes.string,
+  title: PropTypes.string,
+  alt: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  blur: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  breakpoints: PropTypes.arrayOf(
+    PropTypes.shape({
+      media: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+      blur: PropTypes.string.isRequired,
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired
+    }).isRequired
+  ),
+  style: PropTypes.object,
+  rootMargin: PropTypes.string
+}
 class LazyImage extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    title: PropTypes.string,
-    alt: PropTypes.string.isRequired,
-    path: PropTypes.string,
-    blur: PropTypes.string,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    breakpoints: PropTypes.arrayOf(
-      PropTypes.shape({
-        media: PropTypes.string.isRequired,
-        path: PropTypes.string.isRequired,
-        blur: PropTypes.string.isRequired,
-        width: PropTypes.number.isRequired,
-        height: PropTypes.number.isRequired
-      }).isRequired
-    ),
-    style: PropTypes.object,
-    rootMargin: PropTypes.string
-  }
+  static propTypes = LazyImagePropTypes
 
   static defaultProps = {
     className: '',
@@ -55,7 +57,7 @@ class LazyImage extends Component {
   }
 
   componentDidMount = () => {
-    if (typeof document !== 'undefined') {
+    if (isBrowser) {
       this.resolution = window.screen.width
 
       addToLazyload(this.img, this.props.rootMargin)
@@ -67,7 +69,10 @@ class LazyImage extends Component {
   }
 
   componentDidUpdate = prevProps => {
-    if (prevProps.path !== this.props.path || prevProps.breakpoints !== this.props.breakpoints) {
+    if (
+      prevProps.path !== this.props.path ||
+      prevProps.breakpoints !== this.props.breakpoints
+    ) {
       this.setSizes()
 
       addToLazyload(this.img, this.props.rootMargin)
@@ -75,13 +80,13 @@ class LazyImage extends Component {
   }
 
   componentWillUnmount = () => {
-    if (typeof document !== 'undefined') {
+    if (isBrowser) {
       window.removeEventListener('resize', this.onResize)
     }
   }
 
   onResize = () => {
-    if (typeof document !== 'undefined') {
+    if (isBrowser) {
       this.resolution = window.screen.width
 
       this.setSizes()
@@ -91,7 +96,10 @@ class LazyImage extends Component {
   }
 
   setSizes = () => {
-    if (typeof document !== 'undefined' && this.props.breakpoints !== 'undefined') {
+    if (
+      isBrowser &&
+      this.props.breakpoints !== 'undefined'
+    ) {
       this.props.breakpoints.forEach(({ media, path, blur, width, height }) => {
         if (window.matchMedia(media).matches && path !== this.state.path) {
           this.setState(

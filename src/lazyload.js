@@ -1,5 +1,7 @@
 // WebP support detection
-const canvas = typeof document === 'object'
+export const isBrowser = typeof document !== 'undefined'
+
+const canvas = isBrowser
   ? document.createElement('canvas')
   : {}
 
@@ -21,7 +23,9 @@ const setImageSrc = elem => {
       elem.height = image.naturalHeight
     }
 
-    image.src = isWebPSupported ? replaceExtensionToWebP(elem.getAttribute('data-src')) : elem.getAttribute('data-src')
+    image.src = isWebPSupported
+      ? replaceExtensionToWebP(elem.getAttribute('data-src'))
+      : elem.getAttribute('data-src')
   }
 }
 
@@ -36,7 +40,7 @@ const onIntersection = (entries, observer) => {
 }
 
 export const addToLazyload = (elem, rootMargin) => {
-  if (typeof window !== 'undefined') {
+  if (isBrowser) {
     if (!('IntersectionObserver' in window)) {
       require('intersection-observer')
     }

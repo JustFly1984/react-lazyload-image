@@ -1,0 +1,9 @@
+{
+  "eslint.options": {
+    "configFile": "./.eslintrc.js"
+  },
+  "eslint.packageManager": "npm",
+  "eslint.run": "onSave",
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "eslint.autoFixOnSave": true
+}

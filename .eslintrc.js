@@ -1,23 +1,28 @@
 module.exports = {
   'parser': 'babel-eslint',
   'extends': [
-    // 'react-tools',
     'eslint:recommended',
     'plugin:react/recommended',
     'standard',
     'standard-react',
-    'plugin:jsx-a11y/recommended',
-    'plugin:css-modules/recommended'
+    'plugin:jsx-a11y/recommended'
   ],
   'plugins': [
+    'babel',
+    'dependencies',
+    'filenames',
     'import',
+    'json',
     'jsx-a11y',
     'html',
+    'no-inferred-method-name',
     'promise',
+    'promiseparams',
     'react',
+    'react-functional-set-state',
+    'react-perf',
     'standard',
-    // 'jest',
-    'css-modules'
+    'you-dont-need-lodash-underscore'
   ],
   'env': {
     'browser': true,

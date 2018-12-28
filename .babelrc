@@ -1,7 +1,17 @@
 {
-  "presets": ["env", "react", "stage-0"],
+  "presets": [
+    "@babel/preset-env"
+  ],
   "plugins": [
-    "transform-object-rest-spread",
-    "transform-react-jsx"
-  ]
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-react-jsx"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "babel-plugin-transform-react-remove-prop-types"
+      ]
+    }
+  }
 }
